@@ -4,4 +4,4 @@
   become: true
 
   roles:
-    - role: grephappiness.ansible-role-rsp-session-components
+    - role: grephappiness.rsp_session_components
