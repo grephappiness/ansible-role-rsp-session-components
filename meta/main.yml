@@ -2,9 +2,9 @@
 dependencies: []
 
 galaxy_info:
-  role_name: rsp-session-components
+  role_name: ansible-role-rsp-session-components
   author: grephappiness
-  description: Rstudio Workbench Session Components for Integrating with Slurm
+  description: Rstudio Workbench Session Components
   min_ansible_version: 2.4
   platforms:
     - name: EL
@@ -17,7 +17,7 @@ galaxy_info:
   license: "license (BSD, MIT)"
   galaxy_tags:
     - rstudio
-    - rstudio-server
-    - rstudio-workbench
+    - rstudioserver
+    - rstudioworkbench
     - slurm
-    - rstudio-launcher
+    - rstudiolauncher

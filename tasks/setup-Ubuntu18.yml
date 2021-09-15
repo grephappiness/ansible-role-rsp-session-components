@@ -54,21 +54,21 @@
 # Ensure rsp-session tmp directory exists
 - name: ensure rsp-session tmp directory exists
   file:
-   path: /tmp/rsp-session-xenial-{{rsp_version}}
+   path: /tmp/rsp-session-xenial-{{ rsp_version }}
    state: directory
 
 # Copy over tarball contents
 - name: extract file contents of tarball
   unarchive:
    src: /tmp/rsp-session-xenial-{{ rsp_version }}.tar.gz
-   dest: /tmp/rsp-session-xenial-{{rsp_version}}
+   dest: /tmp/rsp-session-xenial-{{ rsp_version }}
    remote_src: true
   when: rsp_current_version != rsp_version
 
 # copy extracted content into rsp binary location
 - name: copy extracted files to rsp binaries directory
   copy:
-   src: /tmp/rsp-session-xenial-{{rsp_version}}/rsp-session-xenial-{{rsp_version}}/
+   src: /tmp/rsp-session-xenial-{{ rsp_version }}/rsp-session-xenial-{{ rsp_version }}/
    dest: /usr/lib/rstudio-server
    remote_src: true
   when: rsp_current_version != rsp_version
