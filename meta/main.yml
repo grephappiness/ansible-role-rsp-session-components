@@ -2,7 +2,7 @@
 dependencies: []
 
 galaxy_info:
-  role_name: ansible-role-rsp-session-components
+  role_name: rsp_session_components
   author: grephappiness
   description: Rstudio Workbench Session Components
   min_ansible_version: 2.4
