@@ -1,6 +1,6 @@
 ---
 
-name: Release
+name: release
 'on':
   push:
     tags:
