@@ -1,0 +1,12 @@
+---
+# rsp version
+rsp_version: "1.4.1717-3"
+
+# default url
+rsp_url: "https://s3.amazonaws.com/rstudio-ide-build/session"
+
+# rstudio-server user and group, change these to what common user/group your using for your rstudio-server configuration across all slurm nodes
+rsp_rstudio_user: "rstudio-server"
+rsp_rstudio_uid: 1001
+rsp_rstudio_group: "rstudio-server"
+rsp_rstudio_gid: 1001

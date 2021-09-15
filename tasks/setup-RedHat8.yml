@@ -1,0 +1,72 @@
+---
+- name: install rsp dependencies
+  package:
+   name:
+    - libcurl-devel
+    - libuser-devel
+    - openssl-devel
+    - rrdtool
+    - curl
+   state: present
+
+# Create rstudio service account group
+- name: create rstudio-server group
+  group:
+   name: "{{ rsp_rstudio_group }}"
+   gid: "{{ rsp_rstudio_gid }}"
+   state: present
+
+# Create rstudio service account user
+- name: create rstudio-server user
+  user:
+   name: "{{ rsp_rstudio_user }}"
+   uid: "{{ rsp_rstudio_uid }}"
+   groups: "{{ rsp_rstudio_group }}"
+   state: present
+   append: true
+
+# Fetch rsp session components
+- name: download rsp session components
+  get_url:
+   url: "{{ rsp_url }}/centos7/rsp-session-centos7-{{ rsp_version }}.tar.gz"
+   dest: /tmp/rsp-session-centos7-{{ rsp_version }}.tar.gz
+
+# Check if existing rsp-session-component exists and get version
+- name: check for existing rsp-session binaries and version
+  command: |
+   cat /usr/lib/rstudio-server/VERSION
+  register: rsp_current_version
+  failed_when: false
+  changed_when: false
+
+# Setup rstudio-server directory
+- name: create /usr/lib/rstudio-server directory
+  file:
+   dest: /usr/lib/rstudio-server
+   state: directory
+   owner: root
+   group: root
+   mode: 0655
+  when: rsp_current_version == ''
+
+# Ensure rsp-session tmp directory exists
+- name: ensure rsp-session tmp diretory exists
+  file:
+   path: /tmp/rsp-session-centos7-{{ rsp_version }}
+   state: directory
+
+# Copy over tarball contents
+- name: extract file contents of tarball
+  unarchive:
+   src: /tmp/rsp-session-centos7-{{ rsp_version }}.tar.gz
+   dest: /tmp/rsp-session-centos7-{{ rsp_version }}
+   remote_src: true
+  when: rsp_current_version != rsp_version
+
+# Copy extracted content into rsp binary location
+- name: copy extracted files to rsp binaries directory
+  copy:
+   src: /tmp/rsp-session-centos7-{{ rsp_version }}/rsp-session-centos7-{{ rsp_version }}/
+   dest: /usr/lib/rstudio-server
+   remote_src: true
+  when: rsp_current_version != rsp_version
